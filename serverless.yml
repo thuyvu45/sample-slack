@@ -1,0 +1,46 @@
+service: slackDeploymentNotification
+
+provider:
+  name: aws
+  runtime: nodejs10.x 
+  stage: DEV
+  deploymentBucket:
+    name: paintzen-aws-lambda
+    serverSideEncryption: AES256
+  deploymentPrefix: slackDeploymentNotification
+  versionFunctions: true
+  iamManagedPolicies:
+    - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+    - "arn:aws:iam::aws:policy/AWSElasticBeanstalkFullAccess"
+    - "arn:aws:iam::aws:policy/AmazonSESFullAccess"
+    - "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
+    - "arn:aws:iam::aws:policy/service-role/AWSLambdaSQSQueueExecutionRole"
+    - "arn:aws:iam::aws:policy/service-role/AWSConfigRulesExecutionRole"
+    - "arn:aws:iam::aws:policy/service-role/AWSLambdaRole"
+    - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  role: arn:aws:iam::889196015956:role/service-role/awsLambdaRole
+
+plugins:
+  - serverless-plugin-include-dependencies
+  - serverless-stage-manager
+  - serverless-deployment-bucket
+  
+functions:
+  index:
+    handler: handler.index
+    environment:
+      SLACK_TOKEN: ${ssm:AS-SLACK-TOKEN~true}
+      TW_POLICY: "cnVsZV9uYW1lPURlZmF1bHQgLSBhbGVydCBvbiBzdXNwaWNpb3VzIHJ1bnRpbWUgYmVoYXZpb3IKYWR2YW5jZWRfcHJvdGVjdGlvbj10cnVlCnByb2Nlc3NfZWZmZWN0PWFsZXJ0CnByb2Nlc3Nfd2hpdGVsaXN0PQpwcm9jZXNzX2JsYWNrbGlzdD0KcHJvY2Vzc19ibG9ja19hbGw9dHJ1ZQpwcm9jZXNzX2RldGVjdF9jcnlwdG9taW5lcnM9dHJ1ZQpkb21haW5fZWZmZWN0PWRpc2FibGUKZG9tYWluX3doaXRlbGlzdD0KZG9tYWluX2JsYWNrbGlzdD0KbmV0d29ya19lZmZlY3Q9ZGlzYWJsZQpuZXR3b3JrX3BvcnRfbGlzdGVuX3doaXRlbGlzdD0KbmV0d29ya19wb3J0X2xpc3Rlbl9ibGFja2xpc3Q9Cm5ldHdvcmtfcG9ydF9vdXRib3VuZF93aGl0ZWxpc3Q9Cm5ldHdvcmtfcG9ydF9vdXRib3VuZF9ibGFja2xpc3Q9Cm5ldHdvcmtfaXBfb3V0Ym91bmRfd2hpdGVsaXN0PQpuZXR3b3JrX2lwX291dGJvdW5kX2JsYWNrbGlzdD0KZmlsZXN5c3RlbV9lZmZlY3Q9ZGlzYWJsZQpmaWxlc3lzdGVtX3doaXRlbGlzdD0KZmlsZXN5c3RlbV9ibGFja2xpc3Q9CmNvbnNvbGVfaG9zdD11cy13ZXN0MS5jbG91ZC50d2lzdGxvY2suY29tCmNvbnNvbGVfcG9ydD00NDMKY29uc29sZV90aW1lb3V0X3NlYz0zCmN1c3RvbWVyX2lkPXVzLTMtMTU5MjE2MDc5CmFwaV9rZXk9UTBkb3YreXh4am5qdlp2SnJ0VGhCWDhFaTBRcXJSVzRLTG51T1lTVXJMaUJBMnYwUnNIckNpVmZLSFA5K2VDR0Z2aFhtRjQwcFAwYVV5bi9HUHQ0WUE9PQpwb2xpY3lfdXBkYXRlX2ludGVydmFsX21zPTEyMDAwMAo="
+
+custom:
+  stages:
+    - DEV
+    - PROD
+    - TEST
+    - STAG
+    - UAT
+    - HOTF 
+    - SPRT
+    - POC
+  deploymentBucket:
+    versioning: true

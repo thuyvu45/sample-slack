@@ -1,0 +1,11 @@
+{
+  "Releases": [
+    {
+      "Name": "slack-deployment-notification",
+      "Version": "q.0.0",
+      "Description": "Slack Deployment Notification Lambda.",
+      "Features": [
+      ]
+    }
+  ]
+}

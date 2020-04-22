@@ -1,0 +1,42 @@
+{
+  "name": "slack-deployment-notification",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "devDependencies": {
+    "husky": "2.2.0",
+    "lint-staged": "8.1.6",
+    "prettier": "1.17.0",
+    "serverless-deployment-bucket": "1.1.1",
+    "serverless-plugin-include-dependencies": "4.1.0",
+    "serverless-stage-manager": "1.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm test"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paintzen/slack-deployment-notification.git"
+  },
+  "author": "Paintzen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paintzen/slack-deployment-notification/issues"
+  },
+  "homepage": "https://github.com/paintzen/slack-deployment-notification#readme",
+  "dependencies": {
+    "axios": "0.18.0"
+  }
+}
