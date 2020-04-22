@@ -37,6 +37,6 @@
   },
   "homepage": "https://github.com/paintzen/slack-deployment-notification#readme",
   "dependencies": {
-    "axios": "0.18.0"
+    "axios": "0.18.1"
   }
 }
